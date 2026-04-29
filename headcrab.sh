@@ -22,6 +22,7 @@ set -eu
     DeckClientManifest="https://raw.githubusercontent.com/Deadboy666/SteamTracking/refs/heads/headcrab-testing/ClientManifest/steam_client_steamdeck_stable_ubuntu12"
 	Headcrab_Native="https://raw.githubusercontent.com/Deadboy666/h3adcr-b-modul3s/refs/heads/testing/headcrab_native.sh"
 	Headcrab_Flatpak="https://raw.githubusercontent.com/Deadboy666/h3adcr-b-modul3s/refs/heads/testing/headcrab_flatpak.sh"
+	Headcrab_Client="https://raw.githubusercontent.com/Deadboy666/h3adcr-b-modul3s/refs/heads/testing/client.sh"
     dgsc="https://github.com/Deadboy666/h3adcr-b-modul3s/raw/refs/heads/main/dgsc"
     dlm="https://github.com/Deadboy666/h3adcr-b-modul3s/raw/refs/heads/main/dlm"
     Sources="https://raw.githubusercontent.com/Deadboy666/h3adcr-b-modul3s/refs/heads/testing/sources.txt"
@@ -653,9 +654,11 @@ EOF
     patchflatpaksteam(){
         cd $FlatpakSteamInstallDir/
         if [ -f "steam.sh" ]; then
-            mv steam.sh steam.sh.bak
+            rm steam.sh
+			wget -O client.sh "$Headcrab_Client" &> /dev/null
         	wget -O steam.sh "$Headcrab_Flatpak" &> /dev/null
 			chmod +x steam.sh
+			chmod +x client.sh
 		fi
             echo "SLSSteamInstallType: Flatpak"
         }
@@ -663,9 +666,11 @@ EOF
     patchlocalsteam(){
         cd $SteamInstallDir/
         if [ -f "steam.sh" ]; then
-            mv steam.sh steam.sh.bak
+            rm steam.sh
+			wget -O client.sh "$Headcrab_Client" &> /dev/null
         	wget -O steam.sh "$Headcrab_Native" &> /dev/null
 			chmod +x steam.sh
+			chmod +x client.sh
 		fi
         	echo "SLSSteamInstallType: Local"
         }
